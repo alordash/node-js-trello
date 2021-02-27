@@ -46,6 +46,17 @@ function getPromise(request) {
     });
 }
 
+async function getQuery(query) {
+    let result;
+    try {
+        result = JSON.parse(await getPromise(query));
+    } catch (error) {
+        console.log(error);
+    } finally {
+        return result;
+    }
+}
+
 function formDataPromise(formData, options) {
     return new Promise((resolve, reject) => {
         formData.submit(options, (err, response) => {
@@ -85,16 +96,9 @@ class TrelloManager {
      * @param {String} idBoard 
      * @returns {Object}
      */
-    async GetBoard(idBoard) {
+    GetBoard(idBoard) {
         let query = `https://api.trello.com/1/boards/${idBoard}?lists=open&cards=open&key=${this.key}&token=${this.token}`
-        let result;
-        try {
-            result = JSON.parse(await getPromise(query));
-        } catch (error) {
-            console.log(error);
-        } finally {
-            return result;
-        }
+        return getQuery(query);
     }
 
     /**
@@ -174,6 +178,21 @@ class TrelloManager {
         } finally {
             return result;
         }
+    }
+
+    GetTokenOwner(token) {
+        let query = `https://api.trello.com/1/tokens/${token}/member?key=${this.key}&token=${this.token}`;
+        return getQuery(query);
+    }
+
+    GetUserBoards(userId) {
+        let query = `https://api.trello.com/1/members/${userId}/boards?key=${this.key}&token=${this.token}`;
+        return getQuery(query);
+    }
+
+    GetBoardLists(boardId) {
+        let query = `https://api.trello.com/1/boards/${boardId}/lists?key=${this.key}&token=${this.token}`;
+        return getQuery(query);
     }
 }
 
