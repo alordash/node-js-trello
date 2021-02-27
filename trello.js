@@ -180,16 +180,25 @@ class TrelloManager {
         }
     }
 
+    /**
+     * @param {String} token 
+     */
     GetTokenOwner(token) {
         let query = `https://api.trello.com/1/tokens/${token}/member?key=${this.key}&token=${this.token}`;
         return getQuery(query);
     }
 
+    /**
+     * @param {String} userId 
+     */
     GetUserBoards(userId) {
         let query = `https://api.trello.com/1/members/${userId}/boards?key=${this.key}&token=${this.token}`;
         return getQuery(query);
     }
 
+    /**
+     * @param {String} boardId 
+     */
     GetBoardLists(boardId) {
         let query = `https://api.trello.com/1/boards/${boardId}/lists?key=${this.key}&token=${this.token}`;
         return getQuery(query);
