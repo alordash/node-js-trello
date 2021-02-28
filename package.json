@@ -1,6 +1,6 @@
 {
   "name": "@alordash/node-js-trello",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "My trello API interface",
   "main": "index.js",
   "scripts": {
