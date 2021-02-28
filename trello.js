@@ -203,6 +203,14 @@ class TrelloManager {
         let query = `https://api.trello.com/1/boards/${boardId}/lists?key=${this.key}&token=${this.token}`;
         return getQuery(query);
     }
+
+    /**
+     * @param {String} cardId 
+     */
+    GetCard(cardId) {
+        let query = `https://api.trello.com/1/cards/${cardId}?key=${this.key}&token=${this.token}`;
+        return getQuery(query);
+    }
 }
 
 module.exports = {
