@@ -1,5 +1,6 @@
 const https = require('https');
 const FormData = require('form-data');
+const { type } = require('os');
 
 function requestPromise(options, body) {
     options.headers = { 'Content-Type': 'application/json' };
@@ -210,6 +211,26 @@ class TrelloManager {
     GetCard(cardId) {
         let query = `https://api.trello.com/1/cards/${cardId}?key=${this.key}&token=${this.token}`;
         return getQuery(query);
+    }
+
+    /**
+     * @param {String} cardId 
+     */
+    async DeleteCard(cardId) {
+        const options = {
+            hostname: 'api.trello.com',
+            path: `/1/cards/${cardId}?key=${this.key}&token=${this.token}`,
+            method: 'DELETE'
+        }
+
+        let result;
+        try {
+            result = JSON.parse(await requestPromise(options, {}));
+        } catch (error) {
+            console.log(error);
+        } finally {
+            return result;
+        }
     }
 }
 
