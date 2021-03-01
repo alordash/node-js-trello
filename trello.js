@@ -1,6 +1,5 @@
 const https = require('https');
 const FormData = require('form-data');
-const { type } = require('os');
 
 function requestPromise(options, body) {
     options.headers = { 'Content-Type': 'application/json' };
@@ -109,15 +108,17 @@ class TrelloManager {
      * @param {Number} position 
      * @param {Date} dueDate 
      * @param {String} fileSource 
+     * @param {Array.<String>} idMembers 
      * @returns {Object}
      */
-    async AddCard(idList, name, description, position, dueDate) {
+    async AddCard(idList, name, description, position, dueDate, idMembers) {
         const body = {
             idList,
             name,
             desc: description,
             pos: position,
-            due: dueDate
+            due: dueDate,
+            idMembers
         }
 
         const options = {
@@ -210,6 +211,14 @@ class TrelloManager {
      */
     GetCard(cardId) {
         let query = `https://api.trello.com/1/cards/${cardId}?key=${this.key}&token=${this.token}`;
+        return getQuery(query);
+    }
+
+    /**
+     * @param {String} nickname 
+     */
+    GetMember(nickname) {
+        let query = `https://api.trello.com/1/members/${nickname}?key=${this.key}&token=${this.token}`;
         return getQuery(query);
     }
 
