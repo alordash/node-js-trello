@@ -142,9 +142,12 @@ class TrelloManager {
      * @param {String} cardId 
      * @param {Binary} attachment 
      */
-    async AddAttachment(cardId, attachment) {
+    async AddAttachment(cardId, attachment, body = {}) {
         const formData = new FormData();
-        formData.append('file', attachment);
+
+        formData.append('file', attachment, {
+            filename: body.name
+        });
 
         const options = {
             hostname: 'api.trello.com',
